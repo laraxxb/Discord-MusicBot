@@ -12,14 +12,13 @@ COPY . .
 
 # Install bot dependencies
 RUN npm install
-RUN npm run deploy
 
 # Set up directory for Lavalink if needed
 # Example:
-# WORKDIR /usr/src/lavalink
-# RUN curl -LO https://github.com/Frederikam/Lavalink/releases/download/3.3.2/Lavalink.jar
-# COPY ./docker/application.yml /usr/src/lavalink/application.yml
-
+WORKDIR /usr/src/lavalink
+RUN curl -LO https://github.com/Frederikam/Lavalink/releases/download/3.3.2/Lavalink.jar
+COPY ./docker/application.yml /usr/src/lavalink/application.yml
+WORKDIR /usr/src/app
 # Expose any necessary ports if using Lavalink or other services
 # Example:
 EXPOSE 2333
