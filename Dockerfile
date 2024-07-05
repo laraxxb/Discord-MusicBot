@@ -1,10 +1,8 @@
-# Use a base image with Node.js and Java
-FROM openjdk:11-jre-slim
+# Use a base image with Node.js 16.x and Java
+FROM node:16-alpine
 
-# Install Node.js and npm
-RUN apt-get update && \
-    apt-get install -y curl nodejs npm ffmpeg supervisor && \
-    rm -rf /var/lib/apt/lists/*
+# Install other necessary dependencies if needed
+RUN apk add --no-cache ffmpeg supervisor
 
 # Set up working directory for the bot
 WORKDIR /usr/src/app
@@ -16,17 +14,15 @@ COPY . .
 RUN npm install
 RUN npm run deploy
 
-# Set up directory for Lavalink
-WORKDIR /usr/src/lavalink
+# Set up directory for Lavalink if needed
+# Example:
+# WORKDIR /usr/src/lavalink
+# RUN curl -LO https://github.com/Frederikam/Lavalink/releases/download/3.3.2/Lavalink.jar
+# COPY ./docker/application.yml /usr/src/lavalink/application.yml
 
-# Download Lavalink
-RUN curl -LO https://github.com/Frederikam/Lavalink/releases/download/3.3.2/Lavalink.jar
-
-# Copy Lavalink configuration
-COPY ./docker/application.yml /usr/src/lavalink/application.yml
-
-# Expose Lavalink port
+# Expose any necessary ports if using Lavalink or other services
+# Example:
 EXPOSE 2333
 
-# Command to start supervisord
-CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# Command to start the bot or any other services
+CMD ["node", "index.js"]
