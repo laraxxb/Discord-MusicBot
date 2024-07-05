@@ -1,9 +1,9 @@
 # Use a base image with Node.js and Java
 FROM openjdk:11-jre-slim
 
-# Install Node.js and other dependencies
+# Install Node.js and npm
 RUN apt-get update && \
-    apt-get install -y curl nodejs ffmpeg supervisor && \
+    apt-get install -y curl nodejs npm ffmpeg supervisor && \
     rm -rf /var/lib/apt/lists/*
 
 # Set up working directory for the bot
