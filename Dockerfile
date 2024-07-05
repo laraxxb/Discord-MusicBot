@@ -1,5 +1,5 @@
 # Use a base image with Node.js 16.x and Java
-FROM node:17.9.1-alpine
+FROM node:18-alpine
 
 # Install other necessary dependencies if needed
 RUN apk add --no-cache ffmpeg supervisor
